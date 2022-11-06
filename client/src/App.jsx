@@ -1,4 +1,5 @@
 import {Route, Router, Routes} from "react-router-dom";
+import {RootPage} from "./pages/Root";
 
 function Header() {
     return (
@@ -40,11 +41,9 @@ export function App() {
                         </button>
                     </div>
                 </div>
-                {/*<Routes>*/}
-                {/*    <Route path="/" exact>*/}
-                {/*        */}
-                {/*    </Route>*/}
-                {/*</Routes>*/}
+                <Routes>
+                    <Route path="/" exact element={<RootPage/>}/>
+                </Routes>
             </section>
             <Footer/>
         </Router>
