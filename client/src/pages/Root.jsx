@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {getRestaurants} from "../api";
-import {Loading} from "../../components/Loading";
-import {Restaurant} from "../../components/Restaurant";
+import {Loading} from "../components/Loading";
+import {Restaurant} from "../components/Restaurant";
 
 export function RootPage() {
     const [restaurants, setRestaurants] = useState(null);
