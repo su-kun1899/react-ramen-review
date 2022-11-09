@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getRestaurants} from "../api";
 import {Loading} from "../components/Loading";
 import {Restaurant} from "../components/Restaurant";
+import {Link} from "react-router-dom";
 
 export function RootPage() {
     const [restaurants, setRestaurants] = useState(null);
@@ -23,6 +24,11 @@ export function RootPage() {
                         return <Restaurant key={restaurant.id} restaurant={restaurant}/>
                     })
                 )}
+            </div>
+            <div className="has-text-right">
+                <Link className="button is-warning" to={"/restaurants"}>
+                    全てのラーメンを見る
+                </Link>
             </div>
         </>
     );
