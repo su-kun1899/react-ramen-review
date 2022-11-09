@@ -1,5 +1,4 @@
-import {Route, Router, Routes} from "react-router-dom";
-import {RootPage} from "./pages/Root";
+import {Outlet} from "react-router-dom";
 
 function Header() {
     return (
@@ -31,7 +30,7 @@ function Footer() {
 
 export function App() {
     return (
-        <Router location="" navigator="">
+        <>
             <Header/>
             <section className="section has-background-warning-light">
                 <div className="container">
@@ -41,11 +40,9 @@ export function App() {
                         </button>
                     </div>
                 </div>
-                <Routes>
-                    <Route path="/" exact element={<RootPage/>}/>
-                </Routes>
+                <Outlet/>
             </section>
             <Footer/>
-        </Router>
+        </>
     );
 }
