@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {getRestaurants} from "../api";
 import {Loading} from "../components/Loading";
+import {Pagination} from "../components/Pagination";
 
 export function RestaurantListPage() {
     const [restaurants, setRestaurants] = useState(null);
@@ -27,6 +28,9 @@ export function RestaurantListPage() {
                         {restaurants.rows.map((restaurant) => {
                             return <p key={restaurant.id}>{restaurant.name}</p>;
                         })}
+                    </div>
+                    <div className="block">
+                        <Pagination path="/restaurants" page={page} perPage={perPage} count={restaurants?.count}/>
                     </div>
                 </>
             )}
