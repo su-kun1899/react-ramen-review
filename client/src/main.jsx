@@ -5,6 +5,7 @@ import {createRoot} from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {RootPage} from "./pages/Root";
 import {RestaurantListPage} from "./pages/RestaurantList";
+import {RestaurantDetailPage} from "./pages/RestaurantDetail";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: "/restaurants",
                 element: <RestaurantListPage/>,
+            },
+            {
+                path: "/restaurants/:restaurantId",
+                element: <RestaurantDetailPage/>,
             },
         ],
     },
