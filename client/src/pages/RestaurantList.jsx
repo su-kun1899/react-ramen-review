@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getRestaurants} from "../api";
 import {Loading} from "../components/Loading";
 import {Pagination} from "../components/Pagination";
+import {Restaurant} from "../components/Restaurant";
 
 export function RestaurantListPage() {
     const [restaurants, setRestaurants] = useState(null);
@@ -26,7 +27,7 @@ export function RestaurantListPage() {
                 <>
                     <div className="block">
                         {restaurants.rows.map((restaurant) => {
-                            return <p key={restaurant.id}>{restaurant.name}</p>;
+                            return <Restaurant key={restaurant.id} restaurant={restaurant}/>;
                         })}
                     </div>
                     <div className="block">
