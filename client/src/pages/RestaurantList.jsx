@@ -3,6 +3,7 @@ import {getRestaurants} from "../api";
 import {Loading} from "../components/Loading";
 import {Pagination} from "../components/Pagination";
 import {Restaurant} from "../components/Restaurant";
+import {Breadcrumb} from "../components/Breadcrumb";
 
 export function RestaurantListPage() {
     const [restaurants, setRestaurants] = useState(null);
@@ -21,6 +22,12 @@ export function RestaurantListPage() {
 
     return (
         <>
+            <div className="box">
+                <Breadcrumb links={[
+                    {href: "/", content: "Top"},
+                    {href: "/restaurants", content: "ラーメン店一覧", active: true},
+                ]}/>
+            </div>
             {restaurants == null ? (
                 <Loading/>
             ) : (
