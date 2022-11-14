@@ -39,8 +39,8 @@ export function App() {
                             ログイン
                         </button>
                     </div>
+                    <Outlet/>
                 </div>
-                <Outlet/>
             </section>
             <Footer/>
         </>
