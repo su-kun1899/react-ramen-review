@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import {getRestaurant, getRestaurantReviews} from "../api";
 import {Loading} from "../components/Loading";
+import {Review} from "../components/Review";
+import {Pagination} from "../components/Pagination";
 
 function Restaurant({restaurant, reviews, page, perPage}) {
     return (
@@ -22,6 +24,29 @@ function Restaurant({restaurant, reviews, page, perPage}) {
                     </div>
                 </div>
             </article>
+            <div className="box">
+                {reviews.rows.length === 0 ? (
+                    <p>レビューがまだありません。</p>
+                ) : (
+                    <>
+                        <div className="block">
+                            <p>{reviews.count}件のレビュー</p>
+                        </div>
+                        <div className="block">
+                            {reviews.rows.map((review) => {
+                                return <Review key={review.id} review={review}/>;
+                            })}
+                        </div>
+                        <div className="block">
+                            <Pagination
+                                path={`/restaurants/${restaurant.id}`}
+                                page={page}
+                                perPage={perPage}
+                                count={reviews.count}/>
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     );
 }
