@@ -17,7 +17,7 @@ export const User = sequelize.define(
         },
     },
     {underscored: true},
-)
+);
 
 export const Restaurant = sequelize.define(
     "restaurant",
@@ -64,3 +64,8 @@ export const Review = sequelize.define(
     },
     {underscored: true},
 );
+
+User.hasMany(Review);
+Restaurant.hasMany(Review);
+Review.belongsTo(Restaurant);
+Review.belongsTo(User);
