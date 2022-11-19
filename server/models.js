@@ -1,6 +1,6 @@
 import {Sequelize, DataTypes} from "sequelize";
 
-const url = process.env.DATABASE_URL || "postgres://localhost:5432/review_app";
+const url = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:15432/review_app";
 
 export const sequelize = new Sequelize(url);
 
