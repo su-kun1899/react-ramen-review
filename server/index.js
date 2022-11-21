@@ -1,6 +1,5 @@
 import express from "express"
 import cors from "cors";
-import * as data from "./sample-data.js"
 import {Restaurant, Review, sequelize, User} from "./models.js";
 
 const app = express();
