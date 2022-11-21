@@ -3,9 +3,12 @@ import {Sequelize, DataTypes} from "sequelize";
 const url = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:15432/review_app";
 
 export const sequelize = new Sequelize(url, {
+    dialect: "postgres",
     dialectOptions: {
-        ssl: true,
-        rejectUnauthorized: false
+        "ssl": {
+            require: true,
+            rejectUnauthorized: false,
+        },
     }
 });
 
