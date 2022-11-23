@@ -2,14 +2,17 @@ import {Sequelize, DataTypes} from "sequelize";
 
 const url = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:15432/review_app";
 
+// ローカルでは SSL 無効にする
+const options = process.env.DATABASE_URL ? {
+    "ssl": {
+        require: true,
+        rejectUnauthorized: false,
+    },
+} : {};
+
 export const sequelize = new Sequelize(url, {
     dialect: "postgres",
-    dialectOptions: {
-        "ssl": {
-            require: true,
-            rejectUnauthorized: false,
-        },
-    }
+    dialectOptions: options,
 });
 
 export const User = sequelize.define(
