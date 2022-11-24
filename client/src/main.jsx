@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {RootPage} from "./pages/Root";
 import {RestaurantListPage} from "./pages/RestaurantList";
 import {RestaurantDetailPage} from "./pages/RestaurantDetail";
+import {Auth0Provider} from "@auth0/auth0-react";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
 
 createRoot(document.querySelector("#content")).render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <Auth0Provider
+            domain={import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN}
+            clientId={import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID} redirectUri={window.location.origin}
+        >
+            <RouterProvider router={router}/>
+        </Auth0Provider>
     </React.StrictMode>
 );

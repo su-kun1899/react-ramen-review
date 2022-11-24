@@ -1,4 +1,48 @@
 import {Outlet} from "react-router-dom";
+import {useAuth0} from "@auth0/auth0-react";
+
+function AuthButton() {
+    const {isLoading, isAuthenticated, loginWithRedirect, logout} = useAuth0();
+
+    function handleClickLoginButton() {
+        loginWithRedirect({
+            appState: {
+                path: window.location.pathname,
+            },
+        });
+    }
+
+    function handleClickLoguoutButton() {
+        logout({
+            localOnly: true,
+        });
+    }
+
+    if (isLoading) {
+        return (
+            <button className="button is-warning is-inverted is-outlined is-loading">
+                Loading
+            </button>
+        )
+    }
+
+    if (isAuthenticated) {
+        return (
+            <button className="button is-warning is-inverted is-outlined" onClick={handleClickLoguoutButton}>
+                ログアウト
+            </button>
+        )
+    }
+
+    return (
+        <button
+            className="button is-warning is-inverted is-outlined"
+            onClick={handleClickLoginButton}
+        >
+            ログイン
+        </button>
+    );
+}
 
 function Header() {
     return (
@@ -35,9 +79,7 @@ export function App() {
             <section className="section has-background-warning-light">
                 <div className="container">
                     <div className="block has-text-right">
-                        <button className="button is-warning is-inverted is-outlined">
-                            ログイン
-                        </button>
+                        <AuthButton/>
                     </div>
                     <Outlet/>
                 </div>
