@@ -1,10 +1,11 @@
 import {Breadcrumb} from "../components/Breadcrumb";
 import {useEffect, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
-import {getRestaurant, getRestaurantReviews} from "../api";
+import {getRestaurant, getRestaurantReviews, postRestaurantReview} from "../api";
 import {Loading} from "../components/Loading";
 import {Review} from "../components/Review";
 import {Pagination} from "../components/Pagination";
+import {useAuth0} from "@auth0/auth0-react";
 
 function Restaurant({restaurant, reviews, page, perPage}) {
     return (
@@ -51,9 +52,55 @@ function Restaurant({restaurant, reviews, page, perPage}) {
     );
 }
 
+function Form({onSubmit}) {
+    const {isAuthenticated} = useAuth0();
+
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        if (onSubmit) {
+            const record = {
+                title: event.target.elements.title.value,
+                comment: event.target.elements.comment.value,
+            };
+            event.target.elements.title.value = "";
+            event.target.elements.comment.value = "";
+            onSubmit(record);
+        }
+    }
+
+    return (
+        <form onSubmit={handleFormSubmit}>
+            <div className="field">
+                <div className="control">
+                    <label className="label">タイトル</label>
+                    <div className="control">
+                        <input name="title" className="input" required disabled={!isAuthenticated}/>
+                    </div>
+                </div>
+            </div>
+            <div className="field">
+                <div className="control">
+                    <label className="label">コメント</label>
+                    <div className="control">
+                        <textarea name="comment" className="textarea" required disabled={!isAuthenticated}/>
+                    </div>
+                </div>
+            </div>
+            <div className="field">
+                <button type="submit" className="button is-warning" disabled={!isAuthenticated}>
+                    レビューを投稿
+                </button>
+            </div>
+            <p className="help">ログインが必要です。</p>
+        </form>
+    );
+}
+
 export function RestaurantDetailPage() {
     const [restaurant, setRestaurant] = useState(null);
     const [reviews, setReviews] = useState(null);
+
+    const {getAccessTokenWithPopup} = useAuth0();
 
     const params = useParams();
     const location = useLocation();
@@ -76,6 +123,15 @@ export function RestaurantDetailPage() {
         })
     }, [params.restaurantId, page]);
 
+    async function handleFormSubmit(record) {
+        await postRestaurantReview(params.restaurantId, record, getAccessTokenWithPopup);
+        const data = await getRestaurantReviews(params.restaurantId, {
+            limit: perPage,
+            offset: (page - 1) * perPage,
+        });
+        setReviews(data);
+    }
+
     return (
         <>
             <div className="box">
@@ -94,6 +150,9 @@ export function RestaurantDetailPage() {
             ) : (
                 <Restaurant restaurant={restaurant} reviews={reviews} page={page} perPage={perPage}/>
             )}
+            <div className="box">
+                <Form onSubmit={handleFormSubmit}/>
+            </div>
         </>
     );
 }
