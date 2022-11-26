@@ -14,7 +14,7 @@ export const checkJwt = jwt.expressjwt({
 });
 
 export async function getUser(token) {
-    return await fetch(
+    const auth0Request = await fetch(
         "https://dev-fva6jkbt.auth0.com/userinfo",
         {
             headers: {
@@ -22,4 +22,6 @@ export async function getUser(token) {
             },
         }
     );
+
+    return auth0Request.json();
 }
