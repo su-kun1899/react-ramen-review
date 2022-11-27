@@ -8,7 +8,7 @@ export const checkJwt = jwt.expressjwt({
         jwksRequestsPerMinute: 5,
         jwksUri: 'https://dev-fva6jkbt.auth0.com/.well-known/jwks.json',
     }),
-    audience: 'https://damp-beach-07590.herokuapp.com/',
+    audience: 'http://localhost:4000/',
     issuer: 'https://dev-fva6jkbt.auth0.com/',
     algorithms: ['RS256']
 });
