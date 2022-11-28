@@ -6,16 +6,16 @@ export const checkJwt = jwt.expressjwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: 'https://dev-fva6jkbt.auth0.com/.well-known/jwks.json',
+        jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
     }),
     audience: 'http://localhost:4000/',
-    issuer: 'https://dev-fva6jkbt.auth0.com/',
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256']
 });
 
 export async function getUser(token) {
     const auth0Request = await fetch(
-        "https://dev-fva6jkbt.auth0.com/userinfo",
+        `https://${process.env.AUTH0_DOMAIN}/userinfo`,
         {
             headers: {
                 Authorization: token,
