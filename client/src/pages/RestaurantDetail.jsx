@@ -100,7 +100,7 @@ export function RestaurantDetailPage() {
     const [restaurant, setRestaurant] = useState(null);
     const [reviews, setReviews] = useState(null);
 
-    const {getAccessTokenWithPopup} = useAuth0();
+    const {getAccessTokenSilently} = useAuth0();
 
     const params = useParams();
     const location = useLocation();
@@ -124,7 +124,8 @@ export function RestaurantDetailPage() {
     }, [params.restaurantId, page]);
 
     async function handleFormSubmit(record) {
-        await postRestaurantReview(params.restaurantId, record, getAccessTokenWithPopup);
+        await postRestaurantReview(params.restaurantId, record, getAccessTokenSilently);
+
         const data = await getRestaurantReviews(params.restaurantId, {
             limit: perPage,
             offset: (page - 1) * perPage,

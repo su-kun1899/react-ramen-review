@@ -20,14 +20,22 @@ export async function getRestaurantReviews(restaurantId, arg = {}) {
 }
 
 export async function postRestaurantReview(restaurantId, record, getAccessToken) {
-    const token = await getAccessToken({audience: import.meta.env.VITE_REACT_APP_AUTH0_AUDIENCE});
+    try {
+        const token = await getAccessToken({
+            audience: import.meta.env.VITE_REACT_APP_AUTH0_AUDIENCE,
+            scope: "read:current_user",
+        });
 
-    return request(`/restaurants/${restaurantId}/reviews`, {
-        body: JSON.stringify(record),
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        method: "POST",
-    });
+        return request(`/restaurants/${restaurantId}/reviews`, {
+            body: JSON.stringify(record),
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+        });
+    } catch (e) {
+        console.log(e.message);
+        throw e;
+    }
 }

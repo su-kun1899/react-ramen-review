@@ -33,7 +33,10 @@ createRoot(document.querySelector("#content")).render(
     <React.StrictMode>
         <Auth0Provider
             domain={import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN}
-            clientId={import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID} redirectUri={window.location.origin}
+            clientId={import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID}
+            redirectUri={window.location.origin}
+            audience={import.meta.env.VITE_REACT_APP_AUTH0_AUDIENCE}
+            scope="read:current_user update:current_user_metadata"
         >
             <RouterProvider router={router}/>
         </Auth0Provider>
